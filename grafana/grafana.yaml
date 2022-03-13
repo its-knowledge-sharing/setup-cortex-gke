@@ -16,7 +16,6 @@ dashboardProviders: {}
 dashboardsConfigMaps: {}
 
 grafana.ini:
-  org_role: Editor
   log:
     level: debug
   server:
