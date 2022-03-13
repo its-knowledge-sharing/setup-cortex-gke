@@ -2,20 +2,18 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: cortex-ing
+  name: cortex-ingress
+  namespace: cortex
   annotations:
-    nginx.ingress.kubernetes.io/backend-protocol: HTTP  
-    kubernetes.io/ingress.class: "nginx"
+    kubernetes.io/ingress.allow-http: 'true'
+    #kubernetes.io/ingress.global-static-ip-name: gke-ingress-1
 spec:
-  tls:
-    - hosts:
-      - cortex.<<VAR_NGINX_DOMAIN>>
   rules:
-    - host: cortex.<<VAR_NGINX_DOMAIN>>
+    - host: '*'
       http:
         paths:
-          - path: /
-            pathType: Prefix
+          - path: /*
+            pathType: ImplementationSpecific
             backend:
               service:
                 name: cortex-nginx

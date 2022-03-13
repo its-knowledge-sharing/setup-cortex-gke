@@ -23,4 +23,7 @@ helm template cortex cortex-helm/cortex \
 --namespace ${NS} > tmp-cortex.yaml
 
 kubectl create ns ${NS}
+
 kubectl apply -n ${NS} -f tmp-cortex.yaml
+
+kubectl apply -n ${NS} -f cortex/cortex-ing.yaml
