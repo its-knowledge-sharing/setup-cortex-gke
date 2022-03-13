@@ -1,0 +1,87 @@
+---
+ingress:
+  enabled: false
+
+ingester:
+  extraVolumes:
+    - name: gcp-sa
+      secret:
+        secretName: gcp-sa
+        items:
+        - key: gcp-sa-file
+          path: gcp-sa-file.json
+
+  extraVolumeMounts:
+    - name: gcp-sa
+      mountPath: "/secrets"
+      readOnly: true
+  
+  env:
+    - name: GOOGLE_APPLICATION_CREDENTIALS
+      value: /secrets/gcp-sa-file.json
+
+compactor:
+  extraVolumes:
+    - name: gcp-sa
+      secret:
+        secretName: gcp-sa
+        items:
+        - key: gcp-sa-file
+          path: gcp-sa-file.json
+
+  extraVolumeMounts:
+    - name: gcp-sa
+      mountPath: "/secrets"
+      readOnly: true
+  
+  env:
+    - name: GOOGLE_APPLICATION_CREDENTIALS
+      value: /secrets/gcp-sa-file.json
+
+config:
+  auth_enabled: false
+
+  memberlist:
+    bind_port: 7946
+    join_members:
+      - cortex-memberlist
+
+  ingester:
+    max_transfer_retries: 0
+    lifecycler:
+      join_after: 0s
+      final_sleep: 0s
+      num_tokens: 512
+      ring:
+        replication_factor: 3
+        kvstore:
+          store: memberlist
+          prefix: 'collectors/'
+
+  querier:
+    # Used when the blocks sharding is disabled.
+    store_gateway_addresses: cortex-store-gateway-headless:9095
+
+  storage:
+    engine: blocks
+
+  blocks_storage: 
+    backend: gcs
+    gcs:
+      bucket_name: willchange
+    tsdb:
+      dir: "/data"
+    bucket_store:
+      sync_dir: "data"
+  ruler_storage:
+    backend: gcs
+    gcs:
+      bucket_name: willchange 
+  alertmanager_storage:
+    backend: gcs
+    gcs:
+      bucket_name: willchange    
+
+nginx:
+  config:
+    basicAuthSecretName: "cortex-basic-authen"
