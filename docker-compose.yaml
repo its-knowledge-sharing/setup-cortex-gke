@@ -1,0 +1,39 @@
+version: '3.4'
+
+services:
+
+  prometheus:
+    environment:
+      - DUMMY=001
+      - REGION=us-central1
+      - ZONE=us-central1-a
+      - INSTANCE=${INSTANCE}
+      - GROUP=development
+    command:
+      - --config.file=/etc/prometheus/prometheus.yaml
+      - --storage.tsdb.path=/prometheus
+      - --web.enable-lifecycle
+      - --enable-feature=expand-external-labels
+    container_name: prometheus
+    image: prom/prometheus:v2.33.3
+    user: root
+    restart: always
+    volumes:
+      - ${DATA_DIR}/configs/prometheus.yaml:/etc/prometheus/prometheus.yaml:ro
+      - ${DATA_DIR}/prometheus:/prometheus
+  
+  node-exporter:
+    image: prom/node-exporter:v1.2.2
+    container_name: node-exporter
+    pid: host
+    restart: always
+    volumes:
+      - /:/rootfs:ro,rslave
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+    command:
+      - '--path.procfs=/host/proc' 
+      - '--path.sysfs=/host/sys'
+      - '--path.rootfs=/rootfs'
+      - --collector.filesystem.ignored-mount-points
+      - "^/(sys|proc|dev|host|etc|rootfs/var/lib/docker/containers|rootfs/var/lib/docker/overlay2|rootfs/run/docker/netns|rootfs/var/lib/docker/aufs)($$|/)"      
