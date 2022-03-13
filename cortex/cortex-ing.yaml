@@ -6,7 +6,6 @@ metadata:
   namespace: cortex
   annotations:
     kubernetes.io/ingress.allow-http: 'true'
-    #kubernetes.io/ingress.global-static-ip-name: gke-ingress-1
 spec:
   rules:
     - host: ''
