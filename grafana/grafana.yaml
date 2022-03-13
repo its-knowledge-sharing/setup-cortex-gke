@@ -20,3 +20,6 @@ grafana.ini:
     level: debug
   server:
     root_url: ""
+  auth:
+    annonymous:
+      enabled: true
