@@ -21,6 +21,7 @@ grafana.ini:
   server:
     root_url: ""
   auth:
+    disable_login_form: true
     basic:
       enabled: false
     annonymous:
