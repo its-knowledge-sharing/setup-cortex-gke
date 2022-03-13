@@ -1,0 +1,22 @@
+fullnameOverride: grafana-cortex
+envRenderSecret: {}
+
+datasources:
+  datasources.yaml:
+    apiVersion: 1
+    datasources:
+
+    - name: Cortex
+      type: prometheus
+      access: Server
+      url: http://cortex-query-frontend.cortex.svc.cluster.local:8080/prometheus
+      #skip tls
+
+dashboardProviders: {}
+dashboardsConfigMaps: {}
+
+grafana.ini:
+  log:
+    level: debug
+  server:
+    root_url: ""

@@ -1,0 +1,20 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: grafana-ingress
+  namespace: grafana-cortex
+  annotations:
+    kubernetes.io/ingress.allow-http: 'true'
+spec:
+  rules:
+    - host: ''
+      http:
+        paths:
+          - path: /*
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: grafana-cortex
+                port:
+                  number: 80
