@@ -1,8 +1,17 @@
 #!/bin/bash
 
-NS=cortex
-
 source .env
+
+NS=cortex
+KEY_FILE=sm.json
+SA=${SA_NAME}@${PROJECT}.iam.gserviceaccount.com
+SECRET=gcp-sa
+
+# Create service account secret
+gcloud iam service-accounts keys create ${KEY_FILE} --iam-account=${SA}
+kubectl delete secret ${SECRET} -n ${NS}
+kubectl create secret generic ${SECRET} --from-file=gcp-sa-file=${KEY_FILE} -n ${NS}
+
 
 helm repo add cortex-helm https://cortexproject.github.io/cortex-helm-chart
 
