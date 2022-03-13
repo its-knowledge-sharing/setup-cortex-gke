@@ -4,7 +4,7 @@ DATA_DIR=$(pwd)
 CORTEX_DOMAIN=34.102.218.51  #Change this to match ingress IP address of Cortex
 INSTANCE=$(hostname)
 ENV_FILE=.env
-PROMETHEUS_CFG=${DATA_DIR}/prometheus/prometheus.yaml
+PROMETHEUS_CFG=${DATA_DIR}/prometheus-config/prometheus.yaml
 
 sudo cat << EOF > ${ENV_FILE}
 DATA_DIR=${DATA_DIR}

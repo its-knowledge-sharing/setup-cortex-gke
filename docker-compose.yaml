@@ -19,7 +19,7 @@ services:
     user: root
     restart: always
     volumes:
-      - ${DATA_DIR}/configs/prometheus.yaml:/etc/prometheus/prometheus.yaml:ro
+      - ${DATA_DIR}/prometheus-config/prometheus.yaml:/etc/prometheus/prometheus.yaml:ro
       - ${DATA_DIR}/prometheus:/prometheus
   
   node-exporter:
