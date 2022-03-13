@@ -21,10 +21,9 @@ grafana.ini:
   server:
     root_url: ""
   auth:
-    disable_login_form: true
+    #disable_login_form: true
+    org_role: Editor
     basic:
       enabled: false
     annonymous:
       enabled: true
-      org_role: Editor
-      org_name: Test
