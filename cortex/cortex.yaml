@@ -82,6 +82,5 @@ config:
     gcs:
       bucket_name: willchange    
 
-nginx:
-  config:
-    basicAuthSecretName: "cortex-basic-authen"
+nginx: {}
+  # No basic authen

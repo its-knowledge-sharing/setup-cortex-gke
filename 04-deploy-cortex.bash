@@ -13,4 +13,5 @@ helm template cortex cortex-helm/cortex \
 --set config.alertmanager_storage.gcs.bucket_name=${BUCKET_NAME} \
 --namespace ${NS} > tmp-cortex.yaml
 
+kubectl create ns ${NS}
 kubectl apply -n ${NS} -f tmp-cortex.yaml
